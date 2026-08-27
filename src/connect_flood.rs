@@ -166,7 +166,7 @@ async fn read_connack(stream: &mut TcpStream) -> Result<bool> {
     let mut header = [0u8; 1];
     stream.read_exact(&mut header).await?;
     ensure!(
-        header[0] >> 4 == 0x2 && header[0] & 0x0F == 0,
+        header[0] >> 4 == 0x2 && header[0].trailing_zeros() >= 4,
         "expected CONNACK, got packet type {:#04x} with flags {:#04x}",
         header[0] >> 4,
         header[0] & 0x0F

@@ -1,16 +1,15 @@
 [package]
 name = "mqtt_dos"
 version = "0.1.0"
-authors = ["Michael Jenkins <jenkinsmichpa@gmail.com>"]
 edition = "2024"
 description = "A tool to simulate different denial of service attacks on MQTT brokers"
 
 [dependencies]
 anyhow = "1.0.104"
 bytes = "1.12.1"
-clap = { version = "4.6.6", features = ["derive"] }
+clap = { version = "4.6.7", features = ["derive"] }
 mqttbytes = { version = "0.6.0", features = ["v5"] }
-rand = "0.10.2"
+rand = "0.10.3"
 rumqttc = { version = "0.25.1", default-features = false }
 tokio = { version = "1.53.1", features = ["net", "io-util", "macros", "rt-multi-thread", "signal", "sync", "time"] }
 

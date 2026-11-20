@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2024"
 description = "A tool to simulate different denial of service attacks on MQTT brokers"
 
+[workspace.lints.cargo]
+unused_dependencies = "warn"
+unused_workspace_dependencies = "warn"
+
 [dependencies]
 anyhow = "1.0.104"
 bytes = "1.12.1"
@@ -26,3 +30,4 @@ complexity = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 nursery = { level = "warn", priority = -1 }
 style = { level = "warn", priority = -1 }
+suspicious = { level = "warn", priority = -1 }

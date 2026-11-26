@@ -1,5 +1,5 @@
 [package]
-name = "mqtt_dos"
+name = "mqtt-dos"
 version = "0.1.0"
 edition = "2024"
 description = "A tool to simulate different denial of service attacks on MQTT brokers"
@@ -9,13 +9,13 @@ unused_dependencies = "warn"
 unused_workspace_dependencies = "warn"
 
 [dependencies]
-anyhow = "1.0.104"
-bytes = "1.12.1"
-clap = { version = "4.6.7", features = ["derive"] }
+anyhow = "1.0.105"
+bytes = "1.12.2"
+clap = { version = "4.6.10", features = ["derive"] }
 mqttbytes = { version = "0.6.0", features = ["v5"] }
-rand = "0.10.3"
+rand = "0.10.4"
 rumqttc = { version = "0.25.1", default-features = false }
-tokio = { version = "1.53.1", features = ["net", "io-util", "macros", "rt-multi-thread", "signal", "sync", "time"] }
+tokio = { version = "1.54.1", features = ["net", "io-util", "macros", "rt-multi-thread", "signal", "sync", "time"] }
 
 [profile.release]
 opt-level = 3
@@ -23,11 +23,40 @@ lto = true
 codegen-units = 1
 strip = true
 
+[lints.cargo]
+unused_dependencies = "warn"
+unused_workspace_dependencies = "warn"
+non_kebab_case_bins = "warn"
+non_kebab_case_packages = "warn"
+non_kebab_case_features = "warn"
+non_snake_case_features = "warn"
+
+[lints.rust]
+unsafe_code = "deny"
+single_use_lifetimes = "warn"
+trivial_numeric_casts = "warn"
+unreachable_pub = "warn"
+unused_lifetimes = "warn"
+unused_qualifications = "warn"
+
+[lints.rustdoc]
+broken_intra_doc_links = "warn"
+
 [lints.clippy]
 correctness = { level = "warn", priority = -1 }
+suspicious = { level = "warn", priority = -1 }
 perf = { level = "warn", priority = -1 }
 complexity = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 nursery = { level = "warn", priority = -1 }
 style = { level = "warn", priority = -1 }
-suspicious = { level = "warn", priority = -1 }
+redundant_pub_crate = "allow" # Conflicts with `unreachable_pub`
+allow_attributes_without_reason = "warn"
+dbg_macro = "warn"
+todo = "warn"
+undocumented_unsafe_blocks = "warn"
+missing_safety_doc = "warn"
+unnecessary_safety_comment = "warn"
+unnecessary_safety_doc = "warn"
+wildcard_imports = "warn"
+multiple_unsafe_ops_per_block = "warn"

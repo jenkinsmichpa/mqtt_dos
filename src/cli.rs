@@ -5,10 +5,10 @@ use rumqttc::QoS;
 
 use crate::helper::Credentials;
 
-pub const MAX_PAYLOAD_SIZE: usize = 256 * 1024 * 1024;
+pub(crate) const MAX_PAYLOAD_SIZE: usize = 256 * 1024 * 1024;
 
 #[derive(Clone, Copy, Debug, ValueEnum)]
-pub enum AttackScenario {
+pub(crate) enum AttackScenario {
     #[value(alias = "connect_flood")]
     ConnectFlood,
     #[value(alias = "publish_flood")]
@@ -16,7 +16,7 @@ pub enum AttackScenario {
 }
 
 #[derive(Clone, Copy, Debug, ValueEnum)]
-pub enum ProtocolVersion {
+pub(crate) enum ProtocolVersion {
     /// MQTT 3.1.1
     #[value(name = "v4", alias = "4")]
     V4,
@@ -34,9 +34,12 @@ impl fmt::Display for ProtocolVersion {
     }
 }
 
-#[allow(clippy::enum_variant_names)]
+#[allow(
+    clippy::enum_variant_names,
+    reason = "variant names mirror the MQTT QoS level names"
+)]
 #[derive(Clone, Copy, Debug, ValueEnum)]
-pub enum QoSLevel {
+pub(crate) enum QoSLevel {
     #[value(alias = "0")]
     AtMostOnce,
     #[value(alias = "1")]
@@ -57,7 +60,7 @@ impl From<QoSLevel> for QoS {
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
-pub struct Args {
+pub(crate) struct Args {
     /// Username for MQTT connection
     #[arg(short = 'u', long, requires = "password")]
     pub username: Option<String>,
@@ -108,7 +111,7 @@ pub struct Args {
 }
 
 impl Args {
-    pub fn credentials(&self) -> Option<Credentials> {
+    pub(crate) fn credentials(&self) -> Option<Credentials> {
         Some((self.username.clone()?, self.password.clone()?))
     }
 }

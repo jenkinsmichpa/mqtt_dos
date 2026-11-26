@@ -19,8 +19,15 @@ use crate::{
     stats::Stats,
 };
 
-#[allow(clippy::significant_drop_tightening)]
-pub async fn run_connect_flood(args: &Args, broker_addr: &str, stats: Arc<Stats>) -> Result<()> {
+#[allow(
+    clippy::significant_drop_tightening,
+    reason = "the permit is intentionally held for the whole client task"
+)]
+pub(crate) async fn run_connect_flood(
+    args: &Args,
+    broker_addr: &str,
+    stats: Arc<Stats>,
+) -> Result<()> {
     println!(
         "Starting Connect Flood attack against {broker_addr} using MQTT v{} with {} simultaneous connections, sending {} CONNECT packets",
         args.protocol_version,

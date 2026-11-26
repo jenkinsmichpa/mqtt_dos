@@ -27,10 +27,12 @@ async fn main() -> Result<()> {
         cli::MAX_PAYLOAD_SIZE
     );
 
-    let broker_addr = if args.broker_hostname.contains(':') {
-        format!("[{}]:{}", args.broker_hostname, args.port)
+    let host = &args.broker_hostname;
+    let port = args.port;
+    let broker_addr = if host.contains(':') {
+        format!("[{host}]:{port}")
     } else {
-        format!("{}:{}", args.broker_hostname, args.port)
+        format!("{host}:{port}")
     };
 
     let stats = Arc::new(Stats::default());

@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Debug, Default)]
-pub struct Stats {
+pub(crate) struct Stats {
     pub connects_attempted: AtomicU64,
     pub connects_succeeded: AtomicU64,
     pub connects_failed: AtomicU64,
@@ -10,7 +10,7 @@ pub struct Stats {
 }
 
 impl Stats {
-    pub fn print(&self) {
+    pub(crate) fn print(&self) {
         let get = |counter: &AtomicU64| counter.load(Ordering::Relaxed);
         println!(
             "Summary: {} connect(s) attempted, {} succeeded, {} failed\n{} publish(es) queued, {} queue failed",

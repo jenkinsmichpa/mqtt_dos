@@ -23,7 +23,7 @@ use crate::{
 const RETAIN: bool = false;
 const DEFAULT_CHANNEL_CAPACITY: usize = 1024;
 
-pub async fn run_publish_flood(args: &Args, stats: Arc<Stats>) -> Result<()> {
+pub(crate) async fn run_publish_flood(args: &Args, stats: Arc<Stats>) -> Result<()> {
     println!(
         "Starting Publish Flood attack against {}:{} using MQTT v{} with {} simultaneous connections, sending {} PUBLISH packets",
         args.broker_hostname,
@@ -90,7 +90,10 @@ async fn do_publish(
     true
 }
 
-#[allow(clippy::too_many_arguments)]
+#[allow(
+    clippy::too_many_arguments,
+    reason = "the parameters are independent per-client settings"
+)]
 async fn publish_client(
     username: Option<String>,
     password: Option<String>,
